@@ -115,32 +115,32 @@ pub fn copy_file_to_tmp(file_path: &str) -> Result<String, InjectionError> {
     }
 }
 
-pub fn fix_file_context(file_path: &str) -> Result<(), InjectionError> {
-    // set file context to apk_data_file for dlopen to succeed
-    info!("Fixing file context for {}", file_path);
-    match std::process::Command::new("chcon")
-        .arg("u:object_r:apk_data_file:s0")
-        .arg(file_path)
-        .output()
-    {
-        Ok(output) => {
-            if !output.status.success() {
-                error!(
-                    "Error running chcon: {}",
-                    String::from_utf8_lossy(&output.stderr)
-                );
-                Err(InjectionError::CommandError)
-            } else {
-                info!("File context fixed");
-                Ok(())
-            }
-        }
-        Err(e) => {
-            error!("Error running chcon: {}", e);
-            Err(InjectionError::CommandError)
-        }
-    }
-}
+// pub fn fix_file_context(file_path: &str) -> Result<(), InjectionError> {
+//     // set file context to apk_data_file for dlopen to succeed
+//     info!("Fixing file context for {}", file_path);
+//     match std::process::Command::new("chcon")
+//         .arg("u:object_r:apk_data_file:s0")
+//         .arg(file_path)
+//         .output()
+//     {
+//         Ok(output) => {
+//             if !output.status.success() {
+//                 error!(
+//                     "Error running chcon: {}",
+//                     String::from_utf8_lossy(&output.stderr)
+//                 );
+//                 Err(InjectionError::CommandError)
+//             } else {
+//                 info!("File context fixed");
+//                 Ok(())
+//             }
+//         }
+//         Err(e) => {
+//             error!("Error running chcon: {}", e);
+//             Err(InjectionError::CommandError)
+//         }
+//     }
+// }
 
 pub fn fix_file_permissions(file_path: &str) -> Result<(), InjectionError> {
     // add executable permission to file

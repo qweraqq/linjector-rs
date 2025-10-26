@@ -81,7 +81,7 @@ impl Injector {
         }
 
         let tmp_file_path = utils::copy_file_to_tmp(self.file_path.as_str())?;
-        utils::fix_file_context(tmp_file_path.as_str())?;
+        // utils::fix_file_context(tmp_file_path.as_str())?;
         utils::fix_file_permissions(tmp_file_path.as_str())?;
         utils::print_file_hexdump(tmp_file_path.as_str())?;
         Ok(tmp_file_path)
